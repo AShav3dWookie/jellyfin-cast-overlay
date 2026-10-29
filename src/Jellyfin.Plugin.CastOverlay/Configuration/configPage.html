@@ -8,6 +8,13 @@
     <div id="CastOverlayConfigPage" data-role="page" class="page type-interior pluginConfigurationPage" data-require="emby-input,emby-button,emby-select,emby-checkbox">
         <div data-role="content">
             <div class="content-primary">
+                <div id="CastOverlayStatus" class="padded-left padded-right" style="display:none; margin-bottom:1.5em; padding:1em; border-radius:0.3em; background:rgba(204,51,51,0.25); border-left:4px solid #c33;">
+                    <h3 style="margin-top:0;">Overlay not active</h3>
+                    <p id="CastOverlayStatusMessage"></p>
+                    <p>Install <strong>File Transformation</strong> from the repository
+                        <code>https://www.iamparadox.dev/jellyfin/plugins/manifest.json</code>,
+                        then restart the server.</p>
+                </div>
                 <form id="CastOverlayConfigForm">
                     <div class="checkboxContainer checkboxContainer-withDescription">
                         <label class="emby-checkbox-label">
@@ -53,6 +60,17 @@
             document.querySelector('#CastOverlayConfigPage')
                 .addEventListener('pageshow', function () {
                     Dashboard.showLoadingMsg();
+                    ApiClient.getJSON(ApiClient.getUrl('CastOverlay/Status')).then(function (status) {
+                        var box = document.querySelector('#CastOverlayStatus');
+                        if (status.State === 'Registered') {
+                            box.style.display = 'none';
+                            return;
+                        }
+
+                        document.querySelector('#CastOverlayStatusMessage').textContent =
+                            status.Message || 'The overlay script has not been registered yet.';
+                        box.style.display = 'block';
+                    });
                     ApiClient.getPluginConfiguration(CastOverlayConfig.pluginUniqueId).then(function (config) {
                         document.querySelector('#Enabled').checked = config.Enabled;
                         document.querySelector('#ShowDelayMs').value = config.ShowDelayMs;

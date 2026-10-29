@@ -1,4 +1,5 @@
 using Jellyfin.Plugin.CastOverlay.Cast;
+using Jellyfin.Plugin.CastOverlay.Injection;
 using MediaBrowser.Controller;
 using MediaBrowser.Controller.Plugins;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,5 +15,7 @@ public class PluginServiceRegistrator : IPluginServiceRegistrator
     public void RegisterServices(IServiceCollection serviceCollection, IServerApplicationHost applicationHost)
     {
         serviceCollection.AddSingleton<ICastService, CastService>();
+        serviceCollection.AddSingleton<InjectionStatus>();
+        serviceCollection.AddHostedService<FileTransformationRegistrar>();
     }
 }
