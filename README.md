@@ -26,8 +26,11 @@ so this has to be installed first, by hand:
 
 ### 2. Install Cast Overlay
 
-Copy `Jellyfin.Plugin.CastOverlay.dll` into a `Cast Overlay` folder in your server's `plugins`
-directory, then restart Jellyfin.
+1. **Dashboard → Plugins → Repositories → +**, and add
+   `https://github.com/AShav3dWookie/jellfin-cast-overlay/releases/latest/download/manifest.json`
+2. **Catalog → Cast Overlay → Install**, then restart Jellyfin.
+
+New versions then arrive as normal plugin updates.
 
 After restarting, open **Dashboard → Plugins → Cast Overlay**. If File Transformation is missing,
 or registering with it failed, the settings page shows a warning.
@@ -72,11 +75,22 @@ scripts/test-client.sh                                                 # client 
 e2e/run.sh                                                             # end-to-end tests
 ```
 
-`e2e/run.sh` starts a fresh Jellyfin 12.3 with File Transformation and this plugin
-installed, generates a small test library (a movie, and a series episode with guest stars), and
-drives jellyfin-web with Playwright. Use `KEEP=1 e2e/run.sh` to leave the server running on
+`e2e/run.sh` starts a fresh Jellyfin 12.3 (`JELLYFIN=12.4 e2e/run.sh` for 12.4) with File
+Transformation and this plugin installed, generates a small test library (a movie, and a series
+episode with guest stars), and drives jellyfin-web with Playwright. Use `KEEP=1 e2e/run.sh` to leave the server running on
 http://localhost:8197 (user `admin`, password `cast-overlay-e2e`). The HTML report, with
 screenshots of the overlay, ends up in `e2e/playwright-report`.
+
+### Releasing
+
+1. Bump the version in `Directory.Build.props` and `src/Jellyfin.Plugin.CastOverlay/build.yaml`,
+   and update the changelog in `build.yaml`.
+2. Commit, then tag and push: `git tag v1.1 && git push origin main v1.1` (`1.1.0.0` → `v1.1`,
+   `1.1.2.0` → `v1.1.2`).
+
+The tag runs the [Release workflow](.github/workflows/release.yaml): the full test suite on
+Jellyfin 12.3 and 12.4, then [`scripts/release.sh`](scripts/release.sh), which builds the zip with
+jprm, adds it to the previous release's `manifest.json`, and publishes both as a GitHub release.
 
 ## License
 

@@ -1,0 +1,21 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+jobs:
+  test:
+    uses: ./.github/workflows/test.yaml
+
+  release:
+    needs: test
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - name: Build and publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: scripts/release.sh
