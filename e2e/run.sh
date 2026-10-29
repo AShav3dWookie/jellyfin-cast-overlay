@@ -26,7 +26,8 @@ compose() { MSYS_NO_PATHCONV=1 docker compose -f "$(host_path "$E2E/docker-compo
 
 echo "==> Resetting state"
 compose down --volumes --remove-orphans >/dev/null 2>&1 || true
-rm -rf "$STATE"
+# Jellyfin writes as root inside the container, so clean up from a container too.
+docker_run -v "$(host_path "$E2E"):/e2e" busybox:1.37 rm -rf /e2e/.state
 mkdir -p "$STATE/config/plugins" "$STATE/cache" "$STATE/media" "$CACHE"
 
 echo "==> Building plugin $PLUGIN_VERSION"
