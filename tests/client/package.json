@@ -1,0 +1,11 @@
+{
+  "name": "cast-overlay-client-tests",
+  "private": true,
+  "description": "Unit tests for the overlay client script. Run via scripts/test-client.sh.",
+  "scripts": {
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "jsdom": "30.1.2"
+  }
+}

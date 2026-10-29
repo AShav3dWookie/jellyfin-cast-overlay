@@ -18,3 +18,9 @@ scripts/dotnet.sh build Jellyfin.Plugin.CastOverlay.slnx -c Release
 ```sh
 scripts/dotnet.sh test Jellyfin.Plugin.CastOverlay.slnx
 ```
+
+Client script unit tests (Node + jsdom, in Docker):
+
+```sh
+scripts/test-client.sh
+```
