@@ -24,3 +24,10 @@ Client script unit tests (Node + jsdom, in Docker):
 ```sh
 scripts/test-client.sh
 ```
+
+End-to-end tests start a fresh Jellyfin 10.11.11 in Docker with File Transformation and this plugin
+installed, generate a small test library, and drive jellyfin-web with Playwright:
+
+```sh
+e2e/run.sh          # KEEP=1 leaves Jellyfin running on http://localhost:8197 (admin / cast-overlay-e2e)
+```

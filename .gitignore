@@ -23,3 +23,4 @@ e2e/.state/
 .idea/
 Thumbs.db
 .DS_Store
+e2e/.cache/

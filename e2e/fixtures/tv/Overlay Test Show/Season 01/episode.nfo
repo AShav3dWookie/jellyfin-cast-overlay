@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<episodedetails>
+  <title>The One With The Guest</title>
+  <season>1</season>
+  <episode>1</episode>
+  <lockdata>true</lockdata>
+  <actor>
+    <name>Gale Gueststar</name>
+    <role>The Visitor</role>
+    <type>GuestStar</type>
+  </actor>
+  <actor>
+    <name>Riley Regularson</name>
+    <role>The Lead</role>
+    <type>GuestStar</type>
+  </actor>
+</episodedetails>

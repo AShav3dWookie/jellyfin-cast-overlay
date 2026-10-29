@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<tvshow>
+  <title>Overlay Test Show</title>
+  <year>2023</year>
+  <lockdata>true</lockdata>
+  <actor>
+    <name>Riley Regularson</name>
+    <role>The Lead</role>
+    <type>Actor</type>
+    <sortorder>0</sortorder>
+  </actor>
+  <actor>
+    <name>Morgan Mainstay</name>
+    <role>The Sidekick</role>
+    <type>Actor</type>
+    <sortorder>1</sortorder>
+  </actor>
+</tvshow>

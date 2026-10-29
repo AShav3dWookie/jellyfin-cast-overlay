@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<movie>
+  <title>Cast Overlay Test Movie</title>
+  <year>2024</year>
+  <plot>A movie that exists only to be paused.</plot>
+  <lockdata>true</lockdata>
+  <director>Dana Directorly</director>
+  <actor>
+    <name>Blake Fixturewood</name>
+    <role>Dr. Mock</role>
+    <type>Actor</type>
+    <sortorder>1</sortorder>
+  </actor>
+  <actor>
+    <name>Avery Testington</name>
+    <role>Captain Placeholder</role>
+    <type>Actor</type>
+    <sortorder>0</sortorder>
+  </actor>
+  <actor>
+    <name>Casey Stubbleton</name>
+    <role>The Narrator</role>
+    <type>Actor</type>
+    <sortorder>2</sortorder>
+  </actor>
+</movie>
