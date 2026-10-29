@@ -2,7 +2,8 @@ name: cast-overlay-e2e
 
 services:
   jellyfin:
-    image: jellyfin/jellyfin:12.3.20261023-013714
+    # Set by run.sh from JELLYFIN.
+    image: ${JELLYFIN_IMAGE:?run the suite with e2e/run.sh}
     volumes:
       - ./.state/config:/config
       - ./.state/cache:/cache

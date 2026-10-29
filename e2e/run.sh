@@ -2,8 +2,9 @@
 # End-to-end test run: builds the plugin, starts a fresh Jellyfin 12.3 with File Transformation
 # and the plugin installed, then drives jellyfin-web with Playwright. Only Docker is required.
 #
-# Usage: e2e/run.sh            run the suite and tear down
-#        KEEP=1 e2e/run.sh     leave Jellyfin running afterwards (http://localhost:${E2E_PORT:-8197})
+# Usage: e2e/run.sh                 run the suite against Jellyfin 12.3 and tear down
+#        JELLYFIN=12.4 e2e/run.sh   run it against another supported Jellyfin version
+#        KEEP=1 e2e/run.sh          leave Jellyfin running afterwards (http://localhost:${E2E_PORT:-8197})
 set -euo pipefail
 
 E2E="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -11,10 +12,16 @@ ROOT="$(cd "$E2E/.." && pwd)"
 STATE="$E2E/.state"
 CACHE="$E2E/.cache"
 
-JELLYFIN_IMAGE="jellyfin/jellyfin:12.3.20261023-013714"
+# Each Jellyfin version needs its own File Transformation build.
+JELLYFIN="${JELLYFIN:-12.3}"
 FT_VERSION="3.0.3.0"
-FT_URL="https://github.com/IAmParadox27/jellyfin-plugin-file-transformation/releases/download/$FT_VERSION/Release-12.3.0.zip"
-FT_MD5="26e3ccaee0ca023cef039b1c668c606c"
+case "$JELLYFIN" in
+    12.3) JELLYFIN_TAG="12.3.20261023-013714"; FT_MD5="26e3ccaee0ca023cef039b1c668c606c" ;;
+    12.4) JELLYFIN_TAG="12.4.20261026-211555"; FT_MD5="6fb4ddc8dc5324ea4e587f8549618748" ;;
+    *) echo "Unsupported JELLYFIN=$JELLYFIN (expected 12.3 or 12.4)" >&2; exit 2 ;;
+esac
+export JELLYFIN_IMAGE="jellyfin/jellyfin:$JELLYFIN_TAG"
+FT_URL="https://github.com/IAmParadox27/jellyfin-plugin-file-transformation/releases/download/$FT_VERSION/Release-$JELLYFIN.0.zip"
 PLUGIN_VERSION="$(sed -n 's/.*<Version>\(.*\)<\/Version>.*/\1/p' "$ROOT/Directory.Build.props")"
 
 # Git Bash on Windows needs Windows-style paths for bind mounts.
@@ -37,8 +44,8 @@ PLUGIN_DIR="$STATE/config/plugins/Cast Overlay_$PLUGIN_VERSION"
 mkdir -p "$PLUGIN_DIR"
 cp "$ROOT/artifacts/plugin/Jellyfin.Plugin.CastOverlay.dll" "$PLUGIN_DIR/"
 
-echo "==> Installing File Transformation $FT_VERSION"
-FT_ZIP="$CACHE/file-transformation-$FT_VERSION.zip"
+echo "==> Installing File Transformation $FT_VERSION for Jellyfin $JELLYFIN"
+FT_ZIP="$CACHE/file-transformation-$FT_VERSION-$JELLYFIN.zip"
 md5_ok() { docker_run -v "$(host_path "$CACHE"):/cache" busybox:1.37 sh -c "echo '$FT_MD5  /cache/$(basename "$FT_ZIP")' | md5sum -c -s"; }
 if [ ! -f "$FT_ZIP" ] || ! md5_ok; then
     curl -fsSL -o "$FT_ZIP" "$FT_URL"
