@@ -2,4 +2,7 @@
   <Folder Name="/src/">
     <Project Path="src/Jellyfin.Plugin.CastOverlay/Jellyfin.Plugin.CastOverlay.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Jellyfin.Plugin.CastOverlay.Tests/Jellyfin.Plugin.CastOverlay.Tests.csproj" />
+  </Folder>
 </Solution>

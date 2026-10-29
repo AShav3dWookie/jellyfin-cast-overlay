@@ -12,3 +12,9 @@ No local .NET SDK is needed; everything runs in Docker.
 ```sh
 scripts/dotnet.sh build Jellyfin.Plugin.CastOverlay.slnx -c Release
 ```
+
+## Testing
+
+```sh
+scripts/dotnet.sh test Jellyfin.Plugin.CastOverlay.slnx
+```
