@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Cast Overlay</title>
+</head>
+<body>
+    <div id="CastOverlayConfigPage" data-role="page" class="page type-interior pluginConfigurationPage" data-require="emby-input,emby-button,emby-select,emby-checkbox">
+        <div data-role="content">
+            <div class="content-primary">
+                <form id="CastOverlayConfigForm">
+                    <div class="checkboxContainer checkboxContainer-withDescription">
+                        <label class="emby-checkbox-label">
+                            <input id="Enabled" name="Enabled" type="checkbox" is="emby-checkbox" />
+                            <span>Show the cast overlay when playback is paused</span>
+                        </label>
+                    </div>
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="ShowDelayMs">Delay before showing (ms)</label>
+                        <input id="ShowDelayMs" name="ShowDelayMs" type="number" is="emby-input" min="0" max="60000" step="100" />
+                        <div class="fieldDescription">How long playback must stay paused before the overlay appears. Stops it flashing on quick pauses.</div>
+                    </div>
+                    <div class="inputContainer">
+                        <label class="inputLabel inputLabelUnfocused" for="MaxCastMembers">Maximum cast members</label>
+                        <input id="MaxCastMembers" name="MaxCastMembers" type="number" is="emby-input" min="1" max="100" />
+                    </div>
+                    <div class="checkboxContainer checkboxContainer-withDescription">
+                        <label class="emby-checkbox-label">
+                            <input id="IncludeGuestStars" name="IncludeGuestStars" type="checkbox" is="emby-checkbox" />
+                            <span>Include guest stars on episodes</span>
+                        </label>
+                    </div>
+                    <div class="selectContainer">
+                        <label class="selectLabel" for="Position">Position</label>
+                        <select is="emby-select" id="Position" name="Position" class="emby-select-withcolor emby-select">
+                            <option value="Left">Left</option>
+                            <option value="Right">Right</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button is="emby-button" type="submit" class="raised button-submit block emby-button">
+                            <span>Save</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script type="text/javascript">
+            var CastOverlayConfig = {
+                pluginUniqueId: '0c59cd6c-1dee-4578-82a2-b9f377548402'
+            };
+
+            document.querySelector('#CastOverlayConfigPage')
+                .addEventListener('pageshow', function () {
+                    Dashboard.showLoadingMsg();
+                    ApiClient.getPluginConfiguration(CastOverlayConfig.pluginUniqueId).then(function (config) {
+                        document.querySelector('#Enabled').checked = config.Enabled;
+                        document.querySelector('#ShowDelayMs').value = config.ShowDelayMs;
+                        document.querySelector('#MaxCastMembers').value = config.MaxCastMembers;
+                        document.querySelector('#IncludeGuestStars').checked = config.IncludeGuestStars;
+                        document.querySelector('#Position').value = config.Position;
+                        Dashboard.hideLoadingMsg();
+                    });
+                });
+
+            document.querySelector('#CastOverlayConfigForm')
+                .addEventListener('submit', function (e) {
+                    Dashboard.showLoadingMsg();
+                    ApiClient.getPluginConfiguration(CastOverlayConfig.pluginUniqueId).then(function (config) {
+                        config.Enabled = document.querySelector('#Enabled').checked;
+                        config.ShowDelayMs = parseInt(document.querySelector('#ShowDelayMs').value, 10) || 0;
+                        config.MaxCastMembers = parseInt(document.querySelector('#MaxCastMembers').value, 10) || 1;
+                        config.IncludeGuestStars = document.querySelector('#IncludeGuestStars').checked;
+                        config.Position = document.querySelector('#Position').value;
+                        ApiClient.updatePluginConfiguration(CastOverlayConfig.pluginUniqueId, config).then(function (result) {
+                            Dashboard.processPluginConfigurationUpdateResult(result);
+                        });
+                    });
+
+                    e.preventDefault();
+                    return false;
+                });
+        </script>
+    </div>
+</body>
+</html>

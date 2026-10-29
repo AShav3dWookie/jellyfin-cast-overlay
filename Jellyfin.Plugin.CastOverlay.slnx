@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Jellyfin.Plugin.CastOverlay/Jellyfin.Plugin.CastOverlay.csproj" />
+  </Folder>
+</Solution>
