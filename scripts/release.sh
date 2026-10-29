@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Publishes the version in build.yaml as a GitHub release that Jellyfin installs and updates from.
 # Add this repository in Jellyfin once; it never changes:
-#   https://github.com/AShav3dWookie/jellfin-cast-overlay/releases/latest/download/manifest.json
+#   https://github.com/AShav3dWookie/jellyfin-cast-overlay/releases/latest/download/manifest.json
 # Each release carries the plugin zip and a manifest listing every version so far: the previous
 # release's manifest, extended.
 #
@@ -11,7 +11,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PROJECT="src/Jellyfin.Plugin.CastOverlay"
-REPO="${GITHUB_REPOSITORY:-AShav3dWookie/jellfin-cast-overlay}"
+REPO="${GITHUB_REPOSITORY:-AShav3dWookie/jellyfin-cast-overlay}"
 OUT="$ROOT/artifacts/release"
 
 die() { echo "release: $*" >&2; exit 1; }

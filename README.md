@@ -27,7 +27,7 @@ so this has to be installed first, by hand:
 ### 2. Install Cast Overlay
 
 1. **Dashboard → Plugins → Repositories → +**, and add
-   `https://github.com/AShav3dWookie/jellfin-cast-overlay/releases/latest/download/manifest.json`
+   `https://github.com/AShav3dWookie/jellyfin-cast-overlay/releases/latest/download/manifest.json`
 2. **Catalog → Cast Overlay → Install**, then restart Jellyfin.
 
 New versions then arrive as normal plugin updates.
