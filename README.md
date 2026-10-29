@@ -9,7 +9,7 @@ actor names and the characters they play. Resume, and it's gone.
 - Episodes show the series regulars first, then that episode's guest stars.
 - Uses the cast metadata already in your library; nothing is fetched from the internet.
 
-Requires Jellyfin **10.11.11** or newer 10.11.x.
+Requires Jellyfin **12.3** or later.
 
 ## Installation
 
@@ -72,7 +72,7 @@ scripts/test-client.sh                                                 # client 
 e2e/run.sh                                                             # end-to-end tests
 ```
 
-`e2e/run.sh` starts a fresh `jellyfin/jellyfin:10.11.11` with File Transformation and this plugin
+`e2e/run.sh` starts a fresh Jellyfin 12.3 with File Transformation and this plugin
 installed, generates a small test library (a movie, and a series episode with guest stars), and
 drives jellyfin-web with Playwright. Use `KEEP=1 e2e/run.sh` to leave the server running on
 http://localhost:8197 (user `admin`, password `cast-overlay-e2e`). The HTML report, with

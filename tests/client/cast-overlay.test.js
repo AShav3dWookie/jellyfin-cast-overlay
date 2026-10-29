@@ -340,6 +340,24 @@ describe('init', () => {
         assert.equal(doc.getElementById('castOverlay').style.paddingTop, '112px');
     });
 
+    it('starts below the lowest of several player headers', async () => {
+        const { win, doc } = setup();
+        [60, 100, 0].forEach((bottom) => {
+            const header = doc.createElement('div');
+            header.className = 'skinHeader';
+            header.getBoundingClientRect = () => ({ top: 0, bottom, left: 0, right: 0, width: 0, height: bottom });
+            doc.body.appendChild(header);
+        });
+        const video = addVideo(doc);
+        await tick(win);
+
+        setPaused(video, true);
+        video.dispatchEvent(new win.Event('pause'));
+        await tick(win, 10);
+
+        assert.equal(doc.getElementById('castOverlay').style.paddingTop, '112px');
+    });
+
     it('attaches listeners only once per video', async () => {
         const { win, doc, fetches } = setup();
         const video = addVideo(doc);

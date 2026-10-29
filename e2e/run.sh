@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# End-to-end test run: builds the plugin, starts a fresh Jellyfin 10.11 with File Transformation
+# End-to-end test run: builds the plugin, starts a fresh Jellyfin 12.3 with File Transformation
 # and the plugin installed, then drives jellyfin-web with Playwright. Only Docker is required.
 #
 # Usage: e2e/run.sh            run the suite and tear down
@@ -11,10 +11,10 @@ ROOT="$(cd "$E2E/.." && pwd)"
 STATE="$E2E/.state"
 CACHE="$E2E/.cache"
 
-JELLYFIN_IMAGE="jellyfin/jellyfin:10.11.11"
+JELLYFIN_IMAGE="jellyfin/jellyfin:12.3.20261023-013714"
 FT_VERSION="3.0.3.0"
-FT_URL="https://github.com/IAmParadox27/jellyfin-plugin-file-transformation/releases/download/$FT_VERSION/Release-10.11.11.zip"
-FT_MD5="3ffc219a5c91c9509926cccb0fc9d913"
+FT_URL="https://github.com/IAmParadox27/jellyfin-plugin-file-transformation/releases/download/$FT_VERSION/Release-12.3.0.zip"
+FT_MD5="26e3ccaee0ca023cef039b1c668c606c"
 PLUGIN_VERSION="$(sed -n 's/.*<Version>\(.*\)<\/Version>.*/\1/p' "$ROOT/Directory.Build.props")"
 
 # Git Bash on Windows needs Windows-style paths for bind mounts.

@@ -217,8 +217,12 @@
         }
 
         // Start below the player's header, whose height varies with title length and screen size.
-        var header = doc.querySelector('.skinHeader');
-        var headerBottom = header ? header.getBoundingClientRect().bottom : 0;
+        // Jellyfin 12 renders a legacy and a React header; hidden ones measure zero.
+        var headers = doc.querySelectorAll('.skinHeader');
+        var headerBottom = 0;
+        for (var i = 0; i < headers.length; i++) {
+            headerBottom = Math.max(headerBottom, headers[i].getBoundingClientRect().bottom);
+        }
         var paddingTop = parseFloat(doc.defaultView.getComputedStyle(overlay).paddingTop) || 0;
         if (headerBottom + HEADER_GAP > paddingTop) {
             overlay.style.paddingTop = (headerBottom + HEADER_GAP) + 'px';

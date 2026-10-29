@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Runs the .NET 9 SDK in Docker so no local SDK is needed.
+# Runs the .NET 10 SDK in Docker so no local SDK is needed.
 # Usage: scripts/dotnet.sh build -c Release
 set -euo pipefail
 
@@ -14,5 +14,5 @@ MSYS_NO_PATHCONV=1 exec docker run --rm \
     -v "$ROOT:/src" \
     -v castoverlay-nuget:/root/.nuget/packages \
     -w /src \
-    mcr.microsoft.com/dotnet/sdk:9.0 \
+    mcr.microsoft.com/dotnet/sdk:10.0 \
     dotnet "$@"

@@ -165,10 +165,12 @@ test.describe('mobile layout', () => {
         expect(box.width).toBeLessThanOrEqual(390);
         expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
 
-        // Clears the player's header, whose title wraps on narrow screens.
-        const header = (await page.locator('.skinHeader').boundingBox())!;
+        // Clears the player's header, whose title wraps on narrow screens. Jellyfin 12 renders
+        // more than one; hidden ones have no box.
+        const headerBottoms = await page.locator('.skinHeader').evaluateAll((headers) =>
+            headers.map((h) => h.getBoundingClientRect().bottom));
         const heading = (await overlay.locator('.castOverlay-heading').boundingBox())!;
-        expect(heading.y).toBeGreaterThanOrEqual(header.y + header.height);
+        expect(heading.y).toBeGreaterThanOrEqual(Math.max(...headerBottoms));
 
         await testInfo.attach('mobile-overlay', { body: await page.screenshot(), contentType: 'image/png' });
     });

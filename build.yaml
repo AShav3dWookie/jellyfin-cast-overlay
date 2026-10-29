@@ -2,8 +2,8 @@
 name: "Cast Overlay"
 guid: "0c59cd6c-1dee-4578-82a2-b9f377548402"
 version: "1.0.0.0"
-targetAbi: "10.11.11.0"
-framework: "net9.0"
+targetAbi: "12.3.0.0"
+framework: "net10.0"
 overview: "Show the cast of what you're watching when you pause"
 description: >
   Displays an overlay listing the cast (headshots, actor and character names)

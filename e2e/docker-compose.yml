@@ -2,7 +2,7 @@ name: cast-overlay-e2e
 
 services:
   jellyfin:
-    image: jellyfin/jellyfin:10.11.11
+    image: jellyfin/jellyfin:12.3.20261023-013714
     volumes:
       - ./.state/config:/config
       - ./.state/cache:/cache
